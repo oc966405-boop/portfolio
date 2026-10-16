@@ -1,0 +1,182 @@
+/* ---------- Tokens ---------- */
+:root {
+  --ink: #14213d;
+  --paper: #eef2f6;
+  --surface: #ffffff;
+  --teal: #1f7a8c;
+  --marigold: #f2a541;
+  --muted: #4a5568;
+  --radius: 10px;
+  --gap: 1.25rem;
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Trebuchet MS", Verdana, sans-serif;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--paper);
+}
+
+h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; line-height: 1.2; }
+h1 { font-size: clamp(2rem, 6vw, 3.5rem); margin: 0 0 1rem; }
+h2 { font-size: 1.6rem; margin: 0 0 0.75rem; }
+h3 { font-size: 1.15rem; margin: 0 0 0.5rem; }
+p { max-width: 65ch; margin: 0 0 1rem; }
+a { color: var(--teal); }
+
+a:focus-visible {
+  outline: 3px solid var(--marigold);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  background: var(--marigold);
+  color: var(--ink);
+  padding: 0.5rem 1rem;
+}
+.skip-link:focus { left: 1rem; top: 1rem; z-index: 10; }
+
+/* ---------- Page structure: CSS Grid with named areas ---------- */
+body {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
+  min-height: 100vh;
+  grid-template-rows: auto 1fr auto;
+}
+.site-header { grid-area: header; }
+.page-main   { grid-area: main; }
+.site-footer { grid-area: footer; }
+
+/* Main content: 2-column grid on large screens */
+.page-main {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--gap);
+  width: min(100% - 2rem, 70rem);
+  margin: 2rem auto;
+  align-content: start;
+}
+.hero, .projects, .page-main > #contact { grid-column: 1 / -1; }
+
+/* ---------- Header and navigation: Flexbox ---------- */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  padding: 1rem 1.5rem;
+  background: var(--ink);
+}
+.logo {
+  font-family: Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+}
+.nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav-list a {
+  color: #fff;
+  text-decoration: none;
+  padding: 0.25rem 0;
+  border-bottom: 2px solid transparent;
+}
+.nav-list a:hover { border-bottom-color: var(--marigold); }
+
+/* ---------- Hero ---------- */
+.hero {
+  padding: 2.5rem 0 1rem;
+}
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.btn {
+  display: inline-block;
+  padding: 0.7rem 1.4rem;
+  border-radius: var(--radius);
+  font-weight: bold;
+  text-decoration: none;
+}
+.btn-primary { background: var(--marigold); color: var(--ink); }
+.btn-secondary { border: 2px solid var(--ink); color: var(--ink); }
+
+/* ---------- Panels ---------- */
+.panel {
+  background: var(--surface);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  border-left: 6px solid var(--teal);
+}
+
+/* Skills: Flexbox wrapping tags */
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.tag-list li {
+  background: var(--paper);
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+}
+
+/* Education list */
+.edu-list { margin: 0; }
+.edu-list dt { font-weight: bold; }
+.edu-list dd { margin: 0 0 0.75rem; color: var(--muted); }
+
+/* ---------- Project cards: Grid auto-fit ---------- */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--gap);
+}
+.card {
+  display: flex;               /* Flexbox inside each card */
+  flex-direction: column;
+  background: var(--surface);
+  padding: 1.25rem;
+  border-radius: var(--radius);
+  border-top: 6px solid var(--marigold);
+}
+.card p { flex-grow: 1; }      /* pushes link to the bottom */
+.card-link { font-weight: bold; }
+
+/* ---------- Footer ---------- */
+.site-footer {
+  background: var(--ink);
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+}
+.site-footer p { margin: 0 auto; }
+
+/* ---------- Small screens ---------- */
+@media (max-width: 700px) {
+  .page-main { grid-template-columns: 1fr; }
+  .site-header { flex-direction: column; align-items: flex-start; }
+  .btn { flex: 1 1 100%; text-align: center; }
+}
